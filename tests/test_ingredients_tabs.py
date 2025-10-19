@@ -1,32 +1,24 @@
+# tests/test_ingredients_tabs.py
 import pytest
 from pages.ingredients_page import IngredientsPage
 
+
 @pytest.mark.constructor_tabs
-def test_tabs_buns(chrome, base_url):
-    driver = chrome
-    try:
-        page = IngredientsPage(driver, base_url)
+class TestIngredientsTabs:
+    def test_tabs_buns(self, chrome, base_url):
+        """Проверка открытия вкладки 'Булки'"""
+        page = IngredientsPage(chrome, base_url)
         page.open()
         assert page.click_buns() is True
-    finally:
-        driver.quit()
 
-@pytest.mark.constructor_tabs
-def test_tabs_sauces(chrome, base_url):
-    driver = chrome
-    try:
-        page = IngredientsPage(driver, base_url)
+    def test_tabs_sauces(self, chrome, base_url):
+        """Проверка открытия вкладки 'Соусы'"""
+        page = IngredientsPage(chrome, base_url)
         page.open()
         assert page.click_sauces() is True
-    finally:
-        driver.quit()
 
-@pytest.mark.constructor_tabs
-def test_tabs_fillings(chrome, base_url):
-    driver = chrome
-    try:
-        page = IngredientsPage(driver, base_url)
+    def test_tabs_fillings(self, chrome, base_url):
+        """Проверка открытия вкладки 'Начинки'"""
+        page = IngredientsPage(chrome, base_url)
         page.open()
         assert page.click_fillings() is True
-    finally:
-        driver.quit()

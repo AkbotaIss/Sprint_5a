@@ -1,33 +1,37 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+# pages/ingredients_page.py
+from pages.base_page import BasePage
 from pages.locators import IngredientsLocators as I
 
-class IngredientsPage:
+
+class IngredientsPage(BasePage):
     PATH_MAIN = "/"
 
     def __init__(self, driver, base_url):
-        self.driver = driver
-        self.base_url = base_url
-        self.wait = WebDriverWait(driver, 10)
+        super().__init__(driver, base_url)
 
     def open(self):
-        self.driver.get(self.base_url + self.PATH_MAIN)
-        self.wait.until(EC.visibility_of_element_located(I.SECTION_BUNS))
+        """Открыть главную страницу и дождаться загрузки секции Булки"""
+        self.open(self.PATH_MAIN)
+        self.wait_visible(I.SECTION_BUNS)
 
     def click_buns(self):
-        self.wait.until(EC.element_to_be_clickable(I.TAB_BUNS)).click()
+        """Клик по вкладке 'Булки'"""
+        self.click(I.TAB_BUNS)
         return self._is_active(I.TAB_BUNS)
 
     def click_sauces(self):
-        self.wait.until(EC.element_to_be_clickable(I.TAB_SAUCES)).click()
+        """Клик по вкладке 'Соусы'"""
+        self.click(I.TAB_SAUCES)
         return self._is_active(I.TAB_SAUCES)
 
     def click_fillings(self):
-        self.wait.until(EC.element_to_be_clickable(I.TAB_FILLINGS)).click()
+        """Клик по вкладке 'Начинки'"""
+        self.click(I.TAB_FILLINGS)
         return self._is_active(I.TAB_FILLINGS)
 
     def _is_active(self, tab_locator):
-        el = self.wait.until(EC.visibility_of_element_located(tab_locator))
+        """Проверка, что вкладка активна"""
+        el = self.wait_visible(tab_locator)
         aria = el.get_attribute("aria-selected") or ""
         cls = el.get_attribute("class") or ""
         return aria.lower() == "true" or "current" in cls or "active" in cls
